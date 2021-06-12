@@ -1,0 +1,7 @@
+par
+m = 2
+r = 0.2
+cz2 = 10
+SubS1.m = 2
+SubS1.cz = 10
+SubS1.a = 0.5

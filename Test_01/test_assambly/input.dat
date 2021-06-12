@@ -1,0 +1,111 @@
+with main; version=80 ;
+  type=mbs;  autogravity=true;  symbolic = false; size=1; scene=0; 
+  objectidentifier=UMObject;
+  bkgcolor=16777215; gridcolor=16448; axessaturation= 1.E2; 
+  gridstep= 5.E-1; axelengthx= 3.; axelengthy= 3.; axelengthz= 3.; 
+  rotationstyle = z;
+  mousepick=false;
+  a={0.860982186208008 0.137432238838159 -0.489716300280487 0 0.962804750870981 0.270198097144056 0.508635109909331 -0.232635748388332 0.828957739296353};
+  target={0 0 0};
+  distance=10;
+  sensitivity_threshold=0.050;
+with const;
+  cnst=(m# 10# "масса");
+  cnst=(r# 0.2);
+  cnst=(cz2# 10);
+
+with egravity; gravityz=-1; 
+with go;
+  name="GO1";
+  p1x=; p1y=; p1z=; p2x=; p2y=; p2z=; 
+  with ge; type=ELLIPSOID;
+  VisibleSide=vsFront;  material=6520998,6520998,0,0,10,1;
+  p1x=; p1y=; p1z=; p2x=; p2y=; p2z=; 
+  width=1;
+  Density=7800; SurfaceWidth=5; WireSection=5;
+  abc=r,r,r;
+  nm=40; nl=25;
+$ Подсистемы и стандартные элементы (колесные пары и т.д.)
+  with subs1; name="SubS1"; type=mbsincluded; 
+    ro1x=; ro1y=; ro1z=; ro2x=; ro2y=; ro2z=; 
+    ident=Subs1; 
+  with main;
+    type=mbs;  autogravity=true;  symbolic = false; size=1; scene=0; 
+    objectidentifier=UMObject;
+    bkgcolor=16777215; gridcolor=16448; axessaturation= 1.E2; 
+    gridstep= 5.E-1; axelengthx= 3.; axelengthy= 3.; axelengthz= 3.; 
+    rotationstyle = z;
+    mousepick=false;
+    sensitivity_threshold=0.050;
+  with const;
+    cnst=(m# 10# "масса");
+    cnst=(cz# 10# "жесткость");
+    cnst=(a# 0.5# "размер");
+  
+  with egravity; gravityz=-1; 
+  with go;
+    name="GO1";
+    p1x=; p1y=; p1z=; p2x=; p2y=; p2z=; angle1=0; angle2=0; angle3=0; 
+    with ge; type=BAR;
+    VisibleSide=vsFront;  material=6520998,6520998,0,0,10,1;
+    p1x=; p1y=; p1z=; p2x=; p2y=; p2z=; angle1=0; angle2=0; angle3=0; 
+    width=1;
+    Density=7800; SurfaceWidth=5; WireSection=5;
+    discret=0;  box=a,a,a;
+  $ Тела, их инерционные характеристики и графические образы
+  with body1; name="Body1"; ppjoint=0; igrobj=1; 
+    m=m; ixx=1; ixy=; ixz=; iyy=1; iyz=; izz=1; rcx=; rcy=; rcz=; 
+      opoints={
+        '' '' '' 'LSC'  '0' '0' '0' '0' '0' '0'
+      };
+  
+  $ Шарниры, степени свободы, связи, начальные условия
+  with joint1; name="jBase0_Body1"; type=transl; bd1="Base0"; bd2="Body1"; 
+    with jnt1dof; 
+      ro1x=; ro1y=; ro1z=; ro2x=; ro2y=; ro2z=; 
+    e1x=0; e1y=0; e1z= 1.; e2x=0; e2y=0; e2z= 1.; 
+    constx=0; consta=0; x0=0; 
+  with scalarforce; name="jBase0_Body1"; type=none;
+  
+  $ Линейные силовые элементы
+  with lfrc; name="LFrc1";
+  bd1="Base0"; bd2="Body1";   type=elast; 
+      ro1x=; ro1y=; ro1z=; ro2x=; ro2y=; ro2z=; 
+    fx=; fy=; fz=; tx=; ty=; tz=; ro2x1=; ro2y1=; ro2z1=; 
+    c11=; c12=; c13=; c14=; c15=; c16=; c21=; c22=; c23=; 
+    c24=; c25=; c26=; c31=; c32=; c33=cz; c34=; c35=; 
+    c36=; c41=; c42=; c43=; c44=; c45=; c46=; c51=; c52=; 
+    c53=; c54=; c55=; c56=; c61=; c62=; c63=; c64=; c65=; 
+    c66=; 
+    ncoils=7; radius=150; drod=4;
+  
+  with end;
+  
+$ Тела, их инерционные характеристики и графические образы
+with body1; name="Body1"; ppjoint=0; igrobj=1; 
+  m=m; ixx=1; ixy=; ixz=; iyy=1; iyz=; izz=1; rcx=; rcy=; rcz=; 
+    opoints={
+      '' '' '' 'LSC'  '0' '0' '0' '0' '0' '0'
+    };
+
+$ Шарниры, степени свободы, связи, начальные условия
+with joint1; name="jBase0_Body1"; type=transl; bd1="Base0"; bd2="Body1"; 
+  with jnt1dof; 
+    ro1x=; ro1y=; ro1z=; ro2x=; ro2y=; ro2z=; 
+  e1x=0; e1y=0; e1z= 1.; e2x=0; e2y=0; e2z= 1.; 
+  constx=0; consta=0; x0=0; 
+with scalarforce; name="jBase0_Body1"; type=none;
+
+$ Линейные силовые элементы
+with lfrc; name="LFrc1";
+bd1="SubS1.Body1"; bd2="Body1";   type=elast; 
+    ro1x=; ro1y=; ro1z=; ro2x=; ro2y=; ro2z=; 
+  fx=; fy=; fz=; tx=; ty=; tz=; ro2x1=; ro2y1=; ro2z1=; 
+  c11=; c12=; c13=; c14=; c15=; c16=; c21=; c22=; c23=; 
+  c24=; c25=; c26=; c31=; c32=; c33=cz2; c34=; c35=; 
+  c36=; c41=; c42=; c43=; c44=; c45=; c46=; c51=; c52=; 
+  c53=; c54=; c55=; c56=; c61=; c62=; c63=; c64=; c65=; 
+  c66=; 
+  ncoils=7; radius=150; drod=4;
+
+with end;
